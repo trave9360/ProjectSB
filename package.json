@@ -1,8 +1,8 @@
 {
   "name": "pj_sb",
   "version": "1.0.0",
-  "description": "main.js",
-  "main": "main.js",
+  "description": "app.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
