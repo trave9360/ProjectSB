@@ -1,11 +1,25 @@
 {
   "name": "pj_sb",
   "version": "1.0.0",
-  "description": "",
+  "description": "main.js",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "kwon",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trave9360/ProjectSB.git"
+  },
+  "keywords": [
+    "SB"
+  ],
+  "bugs": {
+    "url": "https://github.com/trave9360/ProjectSB/issues"
+  },
+  "homepage": "https://github.com/trave9360/ProjectSB#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }
