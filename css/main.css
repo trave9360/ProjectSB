@@ -1,0 +1,41 @@
+body {
+    background-color: black;
+    color: #fff;
+    font-weight: 300;
+    position: relative;
+}
+
+
+/* Animations */
+fade.ng-hide {
+    opacity: 0;
+}
+
+fade.ng-hide-remove,
+fade.ng-hide-add {
+    display: block ;
+}
+
+fade.ng-hide-remove {
+    transition: all ease 1500ms;
+}
+
+fade.ng-hide-add {
+    transition: all ease 500ms;
+}
+
+animate-grow {
+    max-height: 1280px ;
+}
+
+animate-grow.ng-hide-add {
+    transition: all linear 500ms;
+}
+
+animate-grow.ng-hide-remove {
+    transition: all linear 500ms;
+}
+
+animate-grow.ng-hide {
+    max-height: 0 ;
+}
