@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    function MirrorCtrl(VoiceRecog, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout, $interval) {
+    function BoxCtrl(VoiceRecog, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout, $interval) {
         var _this = this;
         var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
         $scope.listening = false;
@@ -53,23 +53,23 @@
             };
 
             // List commands
-            VoiceRecog.addCommand('What can I say', function() {
-                console.debug("Here is a list of commands...");
+            VoiceRecog.addCommand('안녕', function() {
+                console.debug("내가 아는 말들");
                 console.log(VoiceRecog.commands);
                 $scope.focus = "commands";
             });
 
             // Go back to default view
-            VoiceRecog.addCommand('Go home', defaultView);
+            VoiceRecog.addCommand('취소', defaultView);
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('Go to sleep', function() {
-                console.debug("Ok, going to sleep...");
+            VoiceRecog.addCommand('자러가', function() {
+                console.debug("응 자러갈게...");
                 $scope.focus = "sleep";
             });
 
             // Go back to default view
-            VoiceRecog.addCommand('Wake up', defaultView);
+            VoiceRecog.addCommand('일어나', defaultView);
 
             // Hide everything and "sleep"
             VoiceRecog.addCommand('Show debug information', function() {
@@ -78,70 +78,70 @@
             });
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('Show map', function() {
-                console.debug("Going on an adventure?");
+            VoiceRecog.addCommand('지도', function() {
+                console.debug("어디로 갈레?");
                 $scope.focus = "map";
             });
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('Show (me a) map of *location', function(location) {
-                console.debug("Getting map of", location);
+            VoiceRecog.addCommand('지도 *location', function(location) {
+                console.debug("지도 가져오는중..", location);
                 $scope.map = MapService.generateMap(location);
                 $scope.focus = "map";
             });
 
             // Zoom in map
-            VoiceRecog.addCommand('(map) zoom in', function() {
-                console.debug("Zoooooooom!!!");
+            VoiceRecog.addCommand('확대', function() {
+                console.debug("확대!!!");
                 $scope.map = MapService.zoomIn();
             });
 
-            VoiceRecog.addCommand('(map) zoom out', function() {
-                console.debug("Moooooooooz!!!");
+            VoiceRecog.addCommand('축소', function() {
+                console.debug("축소!!!");
                 $scope.map = MapService.zoomOut();
             });
 
-            VoiceRecog.addCommand('(map) zoom (to) *value', function(value) {
-                console.debug("Moooop!!!", value);
+            VoiceRecog.addCommand('확대 *value', function(value) {
+                console.debug("확대!!!", value);
                 $scope.map = MapService.zoomTo(value);
             });
 
-            VoiceRecog.addCommand('(map) reset zoom', function() {
-                console.debug("Zoooommmmmzzz00000!!!");
+            VoiceRecog.addCommand('확대 취소', function() {
+                console.debug("확대취소!!!");
                 $scope.map = MapService.reset();
                 $scope.focus = "map";
             });
 
             // Search images
-            VoiceRecog.addCommand('Show me *term', function(term) {
-                console.debug("Showing", term);
+            VoiceRecog.addCommand('보여줘 *term', function(term) {
+                console.debug("보여줄게", term);
             });
 
             // Change name
-            VoiceRecog.addCommand('My (name is)(name\'s) *name', function(name) {
-                console.debug("Hi", name, "nice to meet you");
+            VoiceRecog.addCommand('내이름은 *name', function(name) {
+                console.debug("안녕", name, "! 반가워");
                 $scope.user.name = name;
             });
 
             // Set a reminder
-            VoiceRecog.addCommand('Remind me to *task', function(task) {
-                console.debug("I'll remind you to", task);
+            VoiceRecog.addCommand('알려줘 *task', function(task) {
+                console.debug("알림 저장중..", task);
             });
 
             // Clear reminders
-            VoiceRecog.addCommand('Clear reminders', function() {
-                console.debug("Clearing reminders");
+            VoiceRecog.addCommand('알림 정리', function() {
+                console.debug("알림 정리중..");
             });
 
             // Clear log of commands
-            VoiceRecog.addCommand('Clear results', function(task) {
-                 console.debug("Clearing results");
+            VoiceRecog.addCommand('결과 정리', function(task) {
+                 console.debug("결과 정리중..");
                  _this.clearResults();
             });
 
             // Check the time
-            VoiceRecog.addCommand('what time is it', function(task) {
-                 console.debug("It is", moment().format('h:mm:ss a'));
+            VoiceRecog.addCommand('몇시야', function(task) {
+                 console.debug("지금은", moment().format('h:mm:ss a'));
                  _this.clearResults();
             });
 
@@ -181,6 +181,6 @@
     }
 
     angular.module('SoundBox')
-        .controller('MirrorCtrl', MirrorCtrl);
+        .controller('BoxCtrl', BoxCtrl);
 
 }(window.angular));

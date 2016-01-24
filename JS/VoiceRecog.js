@@ -42,7 +42,7 @@
         return service;
     }
 
-    angular.module('SmartMirror')
-        .factory('AnnyangService', AnnyangService);
+    angular.module('SoundBox')
+        .factory('VoiceRecog', VoiceRecog);
 
 }(window.annyang));

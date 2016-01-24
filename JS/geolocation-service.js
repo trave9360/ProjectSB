@@ -8,7 +8,7 @@
         'errors.location.permissionDenied':'You have rejected access to your location',
         'errors.location.positionUnavailable':'Unable to determine your location',
         'errors.location.timeout':'Service timeout has been reached'
-        }
+      };
 
         service.getLocation = function (opts) {
         var deferred = $q.defer();
@@ -44,12 +44,13 @@
           $rootScope.$apply(function(){deferred.reject(geolocation_msgs['errors.location.unsupportedBrowser']);});
         }
         return deferred.promise;
-      }
-        
+      };
+
+
         return service;
     }
 
-    angular.module('SmartMirror')
+    angular.module('SoundBox')
         .factory('GeolocationService', GeolocationService);
 
 }());
