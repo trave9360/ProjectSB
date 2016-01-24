@@ -1,19 +1,17 @@
 @font-face {
-    font-family:'Dosis';
-    src:  url('Dosis.ttf')  format('truetype'); /* EOT file for IE */
+    font-family: "Dosis";
+    src: url("Dosis.ttf"); /* EOT file for IE */
 }
 
 body {
     background-color: black;
     color: #fff;
-    font-family: 'HelveticaNeue-UltraLight', 'Open Sans', sans-serif;
+    font-family: 'Dosis', 'Open Sans', sans-serif;
     font-weight: 300;
     position: relative;
 }
 
-h1 {
-    font-size: 120px;
-}
+h1,
 h2,
 h3,
 h4,
@@ -21,7 +19,9 @@ h5 {
     font-weight: 300;
 }
 
-
+h1 {
+    font-size: 120px;
+}
 
 dt {
     font-weight: 600;
@@ -58,6 +58,7 @@ dt {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
 .listening, .interim-result {
@@ -179,35 +180,35 @@ dt {
 }
 
 /* Animations */
-fade.ng-hide {
+.fade.ng-hide {
     opacity: 0;
 }
 
-fade.ng-hide-remove,
-fade.ng-hide-add {
-    display: block ;
+.fade.ng-hide-remove,
+.fade.ng-hide-add {
+    display: block !important;
 }
 
-fade.ng-hide-remove {
+.fade.ng-hide-remove {
     transition: all ease 1500ms;
 }
 
-fade.ng-hide-add {
+.fade.ng-hide-add {
     transition: all ease 500ms;
 }
 
-animate-grow {
-    max-height: 1280px ;
+.animate-grow {
+    max-height: 1280px !important;
 }
 
-animate-grow.ng-hide-add {
+.animate-grow.ng-hide-add {
     transition: all linear 500ms;
 }
 
-animate-grow.ng-hide-remove {
+.animate-grow.ng-hide-remove {
     transition: all linear 500ms;
 }
 
-animate-grow.ng-hide {
-    max-height: 0 ;
+.animate-grow.ng-hide {
+    max-height: 0  !important;
 }

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="SmartMirror">
   <head>
-    <title>Smart Mirror</title>
+    <title>SoundBox</title>
     <!-- Libraries -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="js/annyang.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -57,28 +58,21 @@
       <div class="bottom-center">
         <!-- Command list -->
         <div class="commands animate-grow" ng-show="focus == 'commands'">
-          <h2>Availalble Commands</h2>
+          <h2>가능한 명령어들</h2>
           <dl>
-            <dt>What can I say?</dt>
-            <dd>Shows a list of voice commands available to you.</dd>
-            <dt>Go home</dt>
-            <dd>Takes you back to the home screen</dd>
-            <dt>Show me ________</dt>
-            <dd>Will show you pictures of the requested item.</dd>
-            <dt>Remind me to ________</dt>
-            <dd>Add something to the reminders list.</dd>
-            <dt>Clear reminders</dt>
-            <dd>Clears out your reminders list.</dd>
-            <dt>Show map</dt>
-            <dd>Shows a map of your current city.</dd>
-            <dt>Show map of ________</dt>
-            <dd>Shows a map of the given location.</dd>
+            <dt>"시작"  "끄기"</dt>
+            <dd>화면을 키고 끕니다.</dd>
+            <dt>"돌아가"</dt>
+            <dd>메인화면으로 돌아갑니다.</dd>
+            <dt>"지도"</dt>
+            <dd>기본설정된 장소의 지도를 보여줍니다.</dd>
+            <dt>"지도 ________"</dt>
+            <dd>말한 장소의 지도를 보여줍니다.</dd>
+            <dt>"내이름은 ________"</dt>
+            <dd>"상단에 이름을 표시해줍니다."</dd>
+            
           </dl>
-          <small>
-            We are using node <script>document.write(process.versions.node)</script>,
-            Chrome <script>document.write(process.versions.chrome)</script>,
-            and Electron <script>document.write(process.versions.electron)</script>.
-          </small>
+
         </div>
 
         <div class="interim-result" ng-bind="interimResult"></div>

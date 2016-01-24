@@ -1,13 +1,16 @@
 (function(angular) {
     'use strict';
 
+
     function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout, $interval) {
         var _this = this;
-        var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
+        var DEFAULT_COMMAND_TEXT = ' "안녕" 이라고 말하면 명령어의 목록이나옵니다.';
         $scope.listening = false;
         $scope.debug = false;
-        $scope.complement = "Hi, sexy!"
-        $scope.focus = "default";
+        $scope.complement = "반가워, WSU!"
+
+
+        $scope.focus = "대기";
         $scope.user = {};
         $scope.interimResult = DEFAULT_COMMAND_TEXT;
 
@@ -17,7 +20,7 @@
         function updateTime(){
             $scope.date = new Date();
         }
-            
+
 
         // Reset the command text
         var restCommand = function(){
@@ -27,7 +30,7 @@
         _this.init = function() {
             var tick = $interval(updateTime, 1000);
             updateTime();
-            $scope.map = MapService.generateMap("Seattle,WA");
+            $scope.map = MapService.generateMap("서울");
             _this.clearResults();
             restCommand();
 
@@ -54,23 +57,25 @@
             }
 
             // List commands
-            AnnyangService.addCommand('What can I say', function() {
-                console.debug("Here is a list of commands...");
+            AnnyangService.addCommand('안녕', function() {
+                console.debug("명령어 목록들...");
                 console.log(AnnyangService.commands);
                 $scope.focus = "commands";
             });
 
+
+
             // Go back to default view
-            AnnyangService.addCommand('Go home', defaultView);
+            AnnyangService.addCommand('돌아가', defaultView);
 
             // Hide everything and "sleep"
-            AnnyangService.addCommand('Go to sleep', function() {
-                console.debug("Ok, going to sleep...");
+            AnnyangService.addCommand('끄기', function() {
+                console.debug("다음에 또 봐요!");
                 $scope.focus = "sleep";
             });
 
             // Go back to default view
-            AnnyangService.addCommand('Wake up', defaultView);
+            AnnyangService.addCommand('시작', defaultView);
 
             // Hide everything and "sleep"
             AnnyangService.addCommand('Show debug information', function() {
@@ -79,70 +84,59 @@
             });
 
             // Hide everything and "sleep"
-            AnnyangService.addCommand('Show map', function() {
+            AnnyangService.addCommand('지도', function() {
                 console.debug("Going on an adventure?");
                 $scope.focus = "map";
             });
 
             // Hide everything and "sleep"
-            AnnyangService.addCommand('Show (me a) map of *location', function(location) {
-                console.debug("Getting map of", location);
+            AnnyangService.addCommand('지도 *location', function(location) {
+                console.debug("지도를 가져옵니다.", location);
                 $scope.map = MapService.generateMap(location);
                 $scope.focus = "map";
             });
 
             // Zoom in map
-            AnnyangService.addCommand('(map) zoom in', function() {
+            AnnyangService.addCommand('확대', function() {
                 console.debug("Zoooooooom!!!");
                 $scope.map = MapService.zoomIn();
             });
 
-            AnnyangService.addCommand('(map) zoom out', function() {
+            AnnyangService.addCommand('축소', function() {
                 console.debug("Moooooooooz!!!");
                 $scope.map = MapService.zoomOut();
             });
 
-            AnnyangService.addCommand('(map) zoom (to) *value', function(value) {
+            AnnyangService.addCommand('확대 *value', function(value) {
                 console.debug("Moooop!!!", value);
                 $scope.map = MapService.zoomTo(value);
             });
 
-            AnnyangService.addCommand('(map) reset zoom', function() {
+            AnnyangService.addCommand('확대 리셋', function() {
                 console.debug("Zoooommmmmzzz00000!!!");
                 $scope.map = MapService.reset();
                 $scope.focus = "map";
             });
 
             // Search images
-            AnnyangService.addCommand('Show me *term', function(term) {
+            AnnyangService.addCommand('찾기 *term', function(term) {
+                var url = 'http://api.flickr.com/services/rest/?tags='+tag;
+                $.getJSON(url);
                 console.debug("Showing", term);
             });
 
             // Change name
-            AnnyangService.addCommand('My (name is)(name\'s) *name', function(name) {
-                console.debug("Hi", name, "nice to meet you");
+            AnnyangService.addCommand('내 이름은 *name', function(name) {
+                console.debug("안녕", name, "반가워");
                 $scope.user.name = name;
             });
 
-            // Set a reminder
-            AnnyangService.addCommand('Remind me to *task', function(task) {
-                console.debug("I'll remind you to", task);
-            });
 
-            // Clear reminders
-            AnnyangService.addCommand('Clear reminders', function() {
-                console.debug("Clearing reminders");
-            });
 
-            // Clear log of commands
-            AnnyangService.addCommand('Clear results', function(task) {
-                 console.debug("Clearing results");
-                 _this.clearResults()
-            });
 
             // Check the time
-            AnnyangService.addCommand('what time is it', function(task) {
-                 console.debug("It is", moment().format('h:mm:ss a'));
+            AnnyangService.addCommand('지금 몇 시야', function(task) {
+                 console.debug("현재시각 : ", moment().format('h:mm:ss a'));
                  _this.clearResults();
             });
 
