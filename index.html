@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="SmartMirror">
   <head>
-    <title>SoundBox</title>
+    <title>Welcome</title>
     <!-- Libraries -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="js/annyang.js"></script>
@@ -16,7 +16,7 @@
     <script src="js/annyang-service.js"></script>
     <script src="js/weather-service.js"></script>
     <script src="js/map-service.js"></script>
-    <script src="js/hue-service.js"></script>
+    <script src="js/sound-service.js"></script>
     <script src="js/geolocation-service.js"></script>
     <script src="js/controller.js"></script>
     <!-- Styles and Resources -->
@@ -70,7 +70,6 @@
             <dd>말한 장소의 지도를 보여줍니다.</dd>
             <dt>"내이름은 ________"</dt>
             <dd>"상단에 이름을 표시해줍니다."</dd>
-            
           </dl>
 
         </div>
@@ -104,5 +103,7 @@
     </div>
     <!-- Sleep cover -->
     <div ng-show="focus == 'sleep'" class="sleep-cover fade"></div>
+    <audio src="musics/breeze.mp3" id="audio01" autostart="false"></audio>
+
   </body>
 </html>

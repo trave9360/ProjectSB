@@ -2,7 +2,7 @@
     'use strict';
 
 
-    function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout, $interval) {
+    function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, MapService,$scope, $timeout, $interval) {
         var _this = this;
         var DEFAULT_COMMAND_TEXT = ' "안녕" 이라고 말하면 명령어의 목록이나옵니다.';
         $scope.listening = false;
@@ -48,8 +48,6 @@
                 });
             })
 
-            //Initiate Hue communication
-            HueService.init();
 
             var defaultView = function() {
                 console.debug("Ok, going to default view...");
@@ -61,7 +59,32 @@
                 console.debug("명령어 목록들...");
                 console.log(AnnyangService.commands);
                 $scope.focus = "commands";
+
             });
+
+            // 노래 컨트롤
+
+            var craudio = new Audio('musisc/틈.mp3');
+            AnnyangService.addCommand('노래 시작', function() {
+                console.debug("노래재생");
+                console.log(AnnyangService.commands);
+                myaudio.play();
+            });
+
+            AnnyangService.addCommand('노래 *audioname', function(audioname) {
+                console.debug("노래를 찾아 재생합니다..", audioname);
+                craudio = Audio('musics/'+audioname+'.mp3');
+                craudio.play();
+            });
+
+
+            AnnyangService.addCommand('정지', function() {
+                console.debug("노래정지");
+                console.log(AnnyangService.commands);
+                craudio.pause();
+            });
+
+
 
 
 
@@ -87,6 +110,8 @@
             AnnyangService.addCommand('지도', function() {
                 console.debug("Going on an adventure?");
                 $scope.focus = "map";
+
+
             });
 
             // Hide everything and "sleep"
@@ -120,8 +145,7 @@
 
             // Search images
             AnnyangService.addCommand('찾기 *term', function(term) {
-                var url = 'http://api.flickr.com/services/rest/?tags='+tag;
-                $.getJSON(url);
+                var url = 'http://api.flickr.com/services/rest/?tags='+term;
                 console.debug("Showing", term);
             });
 
@@ -140,10 +164,7 @@
                  _this.clearResults();
             });
 
-            // Turn lights off
-            AnnyangService.addCommand('(turn) (the) :state (the) light(s) *action', function(state, action) {
-                HueService.performUpdate(state + " " + action);
-            });
+
 
             // Fallback for all commands
             AnnyangService.addCommand('*allSpeech', function(allSpeech) {
