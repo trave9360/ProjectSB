@@ -136,7 +136,7 @@
       recognition.interimResults = true;
 
       // Sets the language to the default 'en-US'. This can be changed with annyang.setLanguage()
-      recognition.lang = 'ko';
+      recognition.lang = 'en-US';
 
       recognition.onstart   = function()      { invokeCallbacks(callbacks.start); };
 
@@ -185,13 +185,13 @@
         // Map the results to an array
         var SpeechRecognitionResult = event.results[event.resultIndex];
         var results = [];
-        var finalResults = false;
+        var finalResults = false
         for (var k = 0; k<SpeechRecognitionResult.length; k++) {
           if(SpeechRecognitionResult.isFinal){
             finalResults = true;
             results[k] = SpeechRecognitionResult[k].transcript;
           }
-          else if(k === 0){
+          else if(k == 0){
             //root.console.log('Interim: %c' + SpeechRecognitionResult[k].transcript, debugStyle);
             invokeCallbacks(callbacks.interimResult, SpeechRecognitionResult[k].transcript, null);
           }

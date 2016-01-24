@@ -1,13 +1,13 @@
 (function(angular) {
     'use strict';
 
-    function BoxCtrl(VoiceRecog, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout, $interval) {
+    function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout, $interval) {
         var _this = this;
         var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
         $scope.listening = false;
         $scope.debug = false;
-        $scope.complement = "안녕, WSU!";
-        $scope.focus = "Default";
+        $scope.complement = "Hi, sexy!"
+        $scope.focus = "default";
         $scope.user = {};
         $scope.interimResult = DEFAULT_COMMAND_TEXT;
 
@@ -17,17 +17,17 @@
         function updateTime(){
             $scope.date = new Date();
         }
-
+            
 
         // Reset the command text
         var restCommand = function(){
           $scope.interimResult = DEFAULT_COMMAND_TEXT;
-        };
+        }
 
         _this.init = function() {
             var tick = $interval(updateTime, 1000);
             updateTime();
-            $scope.map = MapService.generateMap("Seoul");
+            $scope.map = MapService.generateMap("Seattle,WA");
             _this.clearResults();
             restCommand();
 
@@ -43,119 +43,123 @@
                     //this doesn't acutually updat the UI yet
                     //$timeout(WeatherService.refreshWeather, 3600000);
                 });
-            });
+            })
 
             //Initiate Hue communication
+            HueService.init();
 
             var defaultView = function() {
                 console.debug("Ok, going to default view...");
                 $scope.focus = "default";
-            };
+            }
 
             // List commands
-            VoiceRecog.addCommand('안녕', function() {
-                console.debug("내가 아는 말들");
-                console.log(VoiceRecog.commands);
+            AnnyangService.addCommand('What can I say', function() {
+                console.debug("Here is a list of commands...");
+                console.log(AnnyangService.commands);
                 $scope.focus = "commands";
             });
 
             // Go back to default view
-            VoiceRecog.addCommand('취소', defaultView);
+            AnnyangService.addCommand('Go home', defaultView);
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('자러가', function() {
-                console.debug("응 자러갈게...");
+            AnnyangService.addCommand('Go to sleep', function() {
+                console.debug("Ok, going to sleep...");
                 $scope.focus = "sleep";
             });
 
             // Go back to default view
-            VoiceRecog.addCommand('일어나', defaultView);
+            AnnyangService.addCommand('Wake up', defaultView);
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('Show debug information', function() {
+            AnnyangService.addCommand('Show debug information', function() {
                 console.debug("Boop Boop. Showing debug info...");
                 $scope.debug = true;
             });
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('지도', function() {
-                console.debug("어디로 갈레?");
+            AnnyangService.addCommand('Show map', function() {
+                console.debug("Going on an adventure?");
                 $scope.focus = "map";
             });
 
             // Hide everything and "sleep"
-            VoiceRecog.addCommand('지도 *location', function(location) {
-                console.debug("지도 가져오는중..", location);
+            AnnyangService.addCommand('Show (me a) map of *location', function(location) {
+                console.debug("Getting map of", location);
                 $scope.map = MapService.generateMap(location);
                 $scope.focus = "map";
             });
 
             // Zoom in map
-            VoiceRecog.addCommand('확대', function() {
-                console.debug("확대!!!");
+            AnnyangService.addCommand('(map) zoom in', function() {
+                console.debug("Zoooooooom!!!");
                 $scope.map = MapService.zoomIn();
             });
 
-            VoiceRecog.addCommand('축소', function() {
-                console.debug("축소!!!");
+            AnnyangService.addCommand('(map) zoom out', function() {
+                console.debug("Moooooooooz!!!");
                 $scope.map = MapService.zoomOut();
             });
 
-            VoiceRecog.addCommand('확대 *value', function(value) {
-                console.debug("확대!!!", value);
+            AnnyangService.addCommand('(map) zoom (to) *value', function(value) {
+                console.debug("Moooop!!!", value);
                 $scope.map = MapService.zoomTo(value);
             });
 
-            VoiceRecog.addCommand('확대 취소', function() {
-                console.debug("확대취소!!!");
+            AnnyangService.addCommand('(map) reset zoom', function() {
+                console.debug("Zoooommmmmzzz00000!!!");
                 $scope.map = MapService.reset();
                 $scope.focus = "map";
             });
 
             // Search images
-            VoiceRecog.addCommand('보여줘 *term', function(term) {
-                console.debug("보여줄게", term);
+            AnnyangService.addCommand('Show me *term', function(term) {
+                console.debug("Showing", term);
             });
 
             // Change name
-            VoiceRecog.addCommand('내이름은 *name', function(name) {
-                console.debug("안녕", name, "! 반가워");
+            AnnyangService.addCommand('My (name is)(name\'s) *name', function(name) {
+                console.debug("Hi", name, "nice to meet you");
                 $scope.user.name = name;
             });
 
             // Set a reminder
-            VoiceRecog.addCommand('알려줘 *task', function(task) {
-                console.debug("알림 저장중..", task);
+            AnnyangService.addCommand('Remind me to *task', function(task) {
+                console.debug("I'll remind you to", task);
             });
 
             // Clear reminders
-            VoiceRecog.addCommand('알림 정리', function() {
-                console.debug("알림 정리중..");
+            AnnyangService.addCommand('Clear reminders', function() {
+                console.debug("Clearing reminders");
             });
 
             // Clear log of commands
-            VoiceRecog.addCommand('결과 정리', function(task) {
-                 console.debug("결과 정리중..");
-                 _this.clearResults();
+            AnnyangService.addCommand('Clear results', function(task) {
+                 console.debug("Clearing results");
+                 _this.clearResults()
             });
 
             // Check the time
-            VoiceRecog.addCommand('몇시야', function(task) {
-                 console.debug("지금은", moment().format('h:mm:ss a'));
+            AnnyangService.addCommand('what time is it', function(task) {
+                 console.debug("It is", moment().format('h:mm:ss a'));
                  _this.clearResults();
             });
 
-
+            // Turn lights off
+            AnnyangService.addCommand('(turn) (the) :state (the) light(s) *action', function(state, action) {
+                HueService.performUpdate(state + " " + action);
+            });
 
             // Fallback for all commands
-            VoiceRecog.addCommand('*allSpeech', function(allSpeech) {
+            AnnyangService.addCommand('*allSpeech', function(allSpeech) {
                 console.debug(allSpeech);
                 _this.addResult(allSpeech);
             });
 
             var resetCommandTimeout;
             //Track when the Annyang is listening to us
-            VoiceRecog.start(function(listening){
+            AnnyangService.start(function(listening){
                 $scope.listening = listening;
             }, function(interimResult){
                 $scope.interimResult = interimResult;
@@ -180,7 +184,7 @@
         _this.init();
     }
 
-    angular.module('SoundBox')
-        .controller('BoxCtrl', BoxCtrl);
+    angular.module('SmartMirror')
+        .controller('MirrorCtrl', MirrorCtrl);
 
 }(window.angular));

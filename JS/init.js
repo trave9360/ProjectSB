@@ -1,9 +1,9 @@
-// "use strict";
+"use strict";
 
 
 var smartMirror = angular.module('smartMirror', []);
 
-smartMirror.controller("SoundBox", function($scope) {
+smartMirror.controller("smartMirrorCtrl", function($scope) {
   $scope.someting = "Hello World";
 });
 
@@ -12,7 +12,7 @@ if (annyang) {
 
   var help = function(){
     console.log("Here to help!");
-  };
+  }
   // define the functions our commands will run.
   var hello = function() {
     alert("hello");
@@ -30,7 +30,7 @@ if (annyang) {
 
   var commandsAlways = {
     'start listening': startListening,
-  };
+  }
 
   // OPTIONAL: activate debug mode for detailed logging in the console
   annyang.debug();
@@ -45,17 +45,17 @@ if (annyang) {
   //Let us know when we are ready to go
   annyang.addCallback('start', function(){
     console.log("Ready to listen...");
-  });
+  })
 
   annyang.addCallback('resultNoMatch', function(userSaid){
-    console.log("Could not recognize phrase \"" + userSaid + "\"");
-  });
+    console.log("Could not recognize phrase \"" + userSaid + "\"")
+  })
 
 
   //Being smart about listening
   var stopListening = function() {
     console.log("removing commands...");
-    annyang.removeCommands(commands);
+    annyang.removeCommands(commands)
   };
 
   var startListening = function() {

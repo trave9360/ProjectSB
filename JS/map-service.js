@@ -3,7 +3,7 @@
 
     function MapService() {
         var service = {};
-        service.center = "Seoul"; //default map locaiton
+        service.center = "Seattle, WA"; //default map locaiton
         service.zoom = 13; //default zoom is 13
         // COMMANDS
         service.commands = {};
@@ -30,9 +30,9 @@
 
         service.zoomTo = function(value) {
             if(0 + value < 0 || value == "zero"){
-              value = 0;
+              value = 0
             } else if(0 + value > 18){
-              value = 18;
+              value = 18
             }
             service.zoom = value;
             return service.generateMap(service.center);
@@ -51,7 +51,7 @@
         return service;
     }
 
-    angular.module('SoundBox')
+    angular.module('SmartMirror')
         .factory('MapService', MapService);
 
 }(window.annyang));
