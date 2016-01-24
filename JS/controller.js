@@ -73,7 +73,8 @@
 
             AnnyangService.addCommand('노래 *audioname', function(audioname) {
                 console.debug("노래를 찾아 재생합니다..", audioname);
-                craudio = Audio('musics/'+audioname+'.mp3');
+                craudio.pause();
+                craudio = new Audio('musics/'+audioname+'.mp3');
                 craudio.play();
             });
 
@@ -82,6 +83,18 @@
                 console.debug("노래정지");
                 console.log(AnnyangService.commands);
                 craudio.pause();
+            });
+
+            AnnyangService.addCommand('소리 크게', function() {
+                console.debug("소리를 크게합니다");
+                console.log(AnnyangService.commands);
+                craudio.volume += 0.4;
+            });
+
+            AnnyangService.addCommand('소리 작게', function() {
+                console.debug("소리를 작게합니다");
+                console.log(AnnyangService.commands);
+                craudio.volume -= 0.4;
             });
 
 
